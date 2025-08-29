@@ -22,10 +22,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 2.  **Install the required packages:**
 
-    The only dependency is `google-adk`.
+    The dependencies are `google-adk` and `httplib2`.
 
     ```bash
-    pip install google-adk
+    pip install google-adk httplib2
     ```
 
 ### Configuration
@@ -63,3 +63,23 @@ These instructions will get you a copy of the project up and running on your loc
     ```
 
 3.  Open your web browser and go to `http://localhost:8000`. You should see the `coordination_agent` listed and ready to interact with.
+
+## Multi-Agent Architecture
+
+This project uses a multi-agent architecture where a `coordination_agent` delegates tasks to specialized sub-agents.
+
+### Background Agent
+
+The `background_agent` is a sub-agent that can perform long-running tasks and send notifications. It has two tools:
+*   `wait(seconds: int)`: Waits for a specified number of seconds.
+*   `send_google_chat_message(message: str)`: Sends a message to a Google Chat space.
+
+To use the background agent, you need to configure a Google Chat webhook URL in your `app/.env` file.
+
+### Example Usage
+
+You can ask the `coordination_agent` to perform a background task, for example:
+
+> "Wait for 10 seconds and then send a message to Google Chat saying 'Task complete!'"
+
+The `coordination_agent` will delegate this task to the `background_agent`, which will then use its tools to perform the task.

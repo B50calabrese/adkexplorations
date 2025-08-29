@@ -15,7 +15,11 @@
 """Defines the main coordination agent for the ADK explorations project."""
 
 from google.adk.agents import Agent
+from google.adk.tools import AgentTool
 from google.adk.tools import google_search
+from app.background_agent.agent import background_agent
+
+background_agent_tool = AgentTool(agent=background_agent)
 
 root_agent = Agent(
     name='coordination_agent',
@@ -25,7 +29,10 @@ root_agent = Agent(
     description='A coordination agent that can delegate tasks to other agents.',
     instruction=(
         'You are a coordination agent. Your purpose is to understand user '
-        'requests and delegate them to the appropriate specialist agents.'
+        'requests and delegate them to the appropriate specialist agents. '
+        'If a user asks for a task to be performed in the background, '
+        'such as waiting and then sending a notification, you must use the '
+        'background_agent tool.'
     ),
-    tools=[google_search],
+    tools=[google_search, background_agent_tool],
 )

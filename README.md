@@ -66,13 +66,14 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Multi-Agent Architecture
 
-This project uses a multi-agent architecture where a `coordination_agent` delegates tasks to specialized sub-agents. The three agents are:
+This project uses a multi-agent architecture where a `coordination_agent` delegates tasks to specialized sub-agents. The four agents are:
 
 ### 1. Coordination Agent
 The `coordination_agent` is the main entry point for user requests. It understands the user's intent and delegates tasks to the appropriate specialist agent. It has the following tools:
 *   `google_search`: Searches the web for information.
 *   `stock_agent`: A sub-agent that is an expert on the stock market.
 *   `background_agent`: A sub-agent for performing long-running tasks.
+*   `magic_agent`: A sub-agent that is an expert on Magic: The Gathering.
 
 ### 2. Stock Agent
 The `stock_agent` is a specialist agent that handles all stock market related queries. It has the following tool:
@@ -84,6 +85,9 @@ The `background_agent` is a sub-agent that can perform long-running tasks, such 
 *   `send_google_chat_message(message: str)`: Sends a message to a Google Chat space. Requires a `GOOGLE_CHAT_WEBHOOK_URL` in the `.env` file.
 *   `print_to_terminal(message: str)`: Prints a message to the terminal where the agent is running.
 *   `stock_agent`: The specialist stock market agent, used for monitoring stock metrics.
+
+### 4. Magic: The Gathering Agent
+The `magic_agent` is a specialist agent that handles all queries about Magic: The Gathering. It has a comprehensive set of tools for interacting with the Scryfall API.
 
 ### Example Usage
 
@@ -103,3 +107,8 @@ The `coordination_agent` will delegate this task to the `background_agent`.
 > "Let me know when the price of GOOGL goes above $150."
 
 The `coordination_agent` will delegate this task to the `background_agent`, which will then use the `stock_agent` to monitor the price.
+
+**Ask a Magic: The Gathering question:**
+> "Search for a card named 'Black Lotus'"
+
+The `coordination_agent` will delegate this task to the `magic_agent`.

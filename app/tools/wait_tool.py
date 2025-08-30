@@ -14,7 +14,7 @@
 """A tool for waiting a specified amount of time."""
 
 import time
-from google.adk.tools import Tool
+from google.adk.tools import FunctionTool
 
 def wait(seconds: int) -> str:
     """Waits for a specified number of seconds.
@@ -28,8 +28,6 @@ def wait(seconds: int) -> str:
     time.sleep(seconds)
     return f"Waited for {seconds} seconds."
 
-wait_tool = Tool(
-    name="wait",
-    description="Waits for a specified number of seconds.",
+wait_tool = FunctionTool(
     func=wait,
 )

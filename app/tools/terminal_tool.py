@@ -14,7 +14,7 @@
 
 """A tool for printing messages to the terminal."""
 
-from google.adk.tools import Tool
+from google.adk.tools import FunctionTool
 
 def print_to_terminal(message: str) -> str:
     """Prints a message to the terminal.
@@ -28,8 +28,6 @@ def print_to_terminal(message: str) -> str:
     print(f"Message from agent: {message}")
     return "Message printed to terminal."
 
-terminal_tool = Tool(
-    name="print_to_terminal",
-    description="Prints a message to the terminal.",
+terminal_tool = FunctionTool(
     func=print_to_terminal,
 )

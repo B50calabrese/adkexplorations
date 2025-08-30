@@ -22,10 +22,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 2.  **Install the required packages:**
 
-    The dependencies are `google-adk`, `httplib2`, and `polygon-python-client`.
+    The dependencies are `google-adk`, and `httplib2`.
 
     ```bash
-    pip install google-adk httplib2 polygon-python-client
+    pip install google-adk httplib2
     ```
 
 ### Configuration
@@ -75,38 +75,21 @@ The `coordination_agent` is the main entry point for user requests. It understan
 *   `background_agent`: A sub-agent for performing long-running tasks.
 *   `magic_agent`: A sub-agent that is an expert on Magic: The Gathering.
 
-### 2. Stock Agent
-The `stock_agent` is a specialist agent that handles all stock market related queries. It has the following tool:
-*   `get_stock_price(ticker: str)`: Fetches the latest stock price for a given ticker symbol. Requires a `POLYGON_API_KEY` in the `.env` file.
-
-### 3. Background Agent
+### 2. Background Agent
 The `background_agent` is a sub-agent that can perform long-running tasks, such as waiting for a condition to be met and then sending a notification. It has the following tools:
 *   `wait(seconds: int)`: Waits for a specified number of seconds.
-*   `send_google_chat_message(message: str)`: Sends a message to a Google Chat space. Requires a `GOOGLE_CHAT_WEBHOOK_URL` in the `.env` file.
 *   `print_to_terminal(message: str)`: Prints a message to the terminal where the agent is running.
 *   `stock_agent`: The specialist stock market agent, used for monitoring stock metrics.
 
-### 4. Magic: The Gathering Agent
+### 3. Magic: The Gathering Agent
 The `magic_agent` is a specialist agent that handles all queries about Magic: The Gathering. It has a comprehensive set of tools for interacting with the Scryfall API.
 
 ### Example Usage
-
-You can ask the `coordination_agent` to perform various tasks, for example:
-
-**Get a stock price:**
-> "What is the stock price of GOOGL?"
-
-The `coordination_agent` will delegate this task to the `stock_agent`.
 
 **Perform a background task:**
 > "Wait for 10 seconds and then send a message to Google Chat saying 'Task complete!'"
 
 The `coordination_agent` will delegate this task to the `background_agent`.
-
-**Monitor a stock price:**
-> "Let me know when the price of GOOGL goes above $150."
-
-The `coordination_agent` will delegate this task to the `background_agent`, which will then use the `stock_agent` to monitor the price.
 
 **Ask a Magic: The Gathering question:**
 > "Search for a card named 'Black Lotus'"

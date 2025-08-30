@@ -18,6 +18,7 @@ from google.adk.agents import Agent
 from google.adk.tools import AgentTool
 from google.adk.tools import google_search
 from app.background_agent.agent import background_agent
+from app.tools.stock_tool import stock_tool
 
 background_agent_tool = AgentTool(agent=background_agent)
 
@@ -32,7 +33,8 @@ root_agent = Agent(
         'requests and delegate them to the appropriate specialist agents. '
         'If a user asks for a task to be performed in the background, '
         'such as waiting and then sending a notification, you must use the '
-        'background_agent tool.'
+        'background_agent tool. If a user asks for a stock price, you '
+        'must use the get_stock_price tool.'
     ),
-    tools=[google_search, background_agent_tool],
+    tools=[google_search, background_agent_tool, stock_tool],
 )

@@ -22,10 +22,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 2.  **Install the required packages:**
 
-    The dependencies are `google-adk` and `httplib2`.
+    The dependencies are `google-adk`, `httplib2`, and `polygon-python-client`.
 
     ```bash
-    pip install google-adk httplib2
+    pip install google-adk httplib2 polygon-python-client
     ```
 
 ### Configuration
@@ -68,17 +68,28 @@ These instructions will get you a copy of the project up and running on your loc
 
 This project uses a multi-agent architecture where a `coordination_agent` delegates tasks to specialized sub-agents.
 
+### Coordination Agent
+
+The `coordination_agent` is the main entry point for user requests. It can delegate tasks to other agents or use its own tools. It has the following tools:
+*   `google_search`: Searches the web for information.
+*   `get_stock_price(ticker: str)`: Fetches the latest stock price for a given ticker symbol. Requires a `POLYGON_API_KEY` in the `.env` file.
+*   `background_agent`: A sub-agent for performing long-running tasks.
+
 ### Background Agent
 
-The `background_agent` is a sub-agent that can perform long-running tasks and send notifications. It has two tools:
+The `background_agent` is a sub-agent that can perform long-running tasks and send notifications. It has the following tools:
 *   `wait(seconds: int)`: Waits for a specified number of seconds.
-*   `send_google_chat_message(message: str)`: Sends a message to a Google Chat space.
-
-To use the background agent, you need to configure a Google Chat webhook URL in your `app/.env` file.
+*   `send_google_chat_message(message: str)`: Sends a message to a Google Chat space. Requires a `GOOGLE_CHAT_WEBHOOK_URL` in the `.env` file.
+*   `print_to_terminal(message: str)`: Prints a message to the terminal where the agent is running.
 
 ### Example Usage
 
-You can ask the `coordination_agent` to perform a background task, for example:
+You can ask the `coordination_agent` to perform various tasks, for example:
+
+**Get a stock price:**
+> "What is the stock price of GOOGL?"
+
+**Perform a background task:**
 
 > "Wait for 10 seconds and then send a message to Google Chat saying 'Task complete!'"
 

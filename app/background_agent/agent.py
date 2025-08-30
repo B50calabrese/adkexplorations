@@ -16,6 +16,7 @@
 
 from google.adk.agents import LlmAgent
 from app.tools.google_chat_tool import google_chat_tool
+from app.tools.terminal_tool import terminal_tool
 from app.tools.wait_tool import wait_tool
 
 background_agent = LlmAgent(
@@ -25,8 +26,9 @@ background_agent = LlmAgent(
     instruction=(
         'You are a background agent. Your purpose is to perform tasks that '
         'take a long time, such as waiting or calling an external API. '
-        'When the task is complete, you must use the send_google_chat_message '
-        'tool to send a notification.'
+        'When the task is complete, you can send a notification using '
+        'the send_google_chat_message tool or print a message to the '
+        'terminal using the print_to_terminal tool.'
     ),
-    tools=[google_chat_tool, wait_tool],
+    tools=[google_chat_tool, wait_tool, terminal_tool],
 )

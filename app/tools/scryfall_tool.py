@@ -339,3 +339,22 @@ get_set_by_id_tool = Tool(
     description="Gets a set by its Scryfall ID.",
     func=get_set_by_id,
 )
+
+all_scryfall_tools = [
+    search_cards_tool,
+    get_card_by_name_tool,
+    get_random_card_tool,
+    get_card_by_id_tool,
+    autocomplete_card_name_tool,
+    get_card_collection_tool,
+    get_card_by_code_and_number_tool,
+    get_card_by_multiverse_id_tool,
+    get_card_by_mtgo_id_tool,
+    get_card_by_arena_id_tool,
+    get_card_by_tcgplayer_id_tool,
+    get_card_by_cardmarket_id_tool,
+    get_all_sets_tool,
+    get_set_by_code_tool,
+    get_set_by_tcgplayer_id_tool,
+    get_set_by_id_tool,
+]

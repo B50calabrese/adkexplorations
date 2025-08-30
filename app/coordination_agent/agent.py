@@ -19,9 +19,11 @@ from google.adk.tools import AgentTool
 from google.adk.tools import google_search
 from app.background_agent.agent import background_agent
 from app.stock_agent.agent import stock_agent
+from app.magic_agent.agent import magic_agent
 
 background_agent_tool = AgentTool(agent=background_agent)
 stock_agent_tool = AgentTool(agent=stock_agent)
+magic_agent_tool = AgentTool(agent=magic_agent)
 
 root_agent = Agent(
     name='coordination_agent',
@@ -35,7 +37,9 @@ root_agent = Agent(
         'If a user asks for a task to be performed in the background, '
         'such as waiting and then sending a notification, you must use the '
         'background_agent tool. If a user asks a question about the stock '
-        'market, you must use the stock_agent tool.'
+        'market, you must use the stock_agent tool. If a user asks a '
+        'question about Magic: The Gathering, you must use the magic_agent '
+        'tool.'
     ),
-    tools=[google_search, background_agent_tool, stock_agent_tool],
+    tools=[google_search, background_agent_tool, stock_agent_tool, magic_agent_tool],
 )

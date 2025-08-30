@@ -66,21 +66,24 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Multi-Agent Architecture
 
-This project uses a multi-agent architecture where a `coordination_agent` delegates tasks to specialized sub-agents.
+This project uses a multi-agent architecture where a `coordination_agent` delegates tasks to specialized sub-agents. The three agents are:
 
-### Coordination Agent
-
-The `coordination_agent` is the main entry point for user requests. It can delegate tasks to other agents or use its own tools. It has the following tools:
+### 1. Coordination Agent
+The `coordination_agent` is the main entry point for user requests. It understands the user's intent and delegates tasks to the appropriate specialist agent. It has the following tools:
 *   `google_search`: Searches the web for information.
-*   `get_stock_price(ticker: str)`: Fetches the latest stock price for a given ticker symbol. Requires a `POLYGON_API_KEY` in the `.env` file.
+*   `stock_agent`: A sub-agent that is an expert on the stock market.
 *   `background_agent`: A sub-agent for performing long-running tasks.
 
-### Background Agent
+### 2. Stock Agent
+The `stock_agent` is a specialist agent that handles all stock market related queries. It has the following tool:
+*   `get_stock_price(ticker: str)`: Fetches the latest stock price for a given ticker symbol. Requires a `POLYGON_API_KEY` in the `.env` file.
 
-The `background_agent` is a sub-agent that can perform long-running tasks and send notifications. It has the following tools:
+### 3. Background Agent
+The `background_agent` is a sub-agent that can perform long-running tasks, such as waiting for a condition to be met and then sending a notification. It has the following tools:
 *   `wait(seconds: int)`: Waits for a specified number of seconds.
 *   `send_google_chat_message(message: str)`: Sends a message to a Google Chat space. Requires a `GOOGLE_CHAT_WEBHOOK_URL` in the `.env` file.
 *   `print_to_terminal(message: str)`: Prints a message to the terminal where the agent is running.
+*   `stock_agent`: The specialist stock market agent, used for monitoring stock metrics.
 
 ### Example Usage
 
@@ -89,8 +92,14 @@ You can ask the `coordination_agent` to perform various tasks, for example:
 **Get a stock price:**
 > "What is the stock price of GOOGL?"
 
-**Perform a background task:**
+The `coordination_agent` will delegate this task to the `stock_agent`.
 
+**Perform a background task:**
 > "Wait for 10 seconds and then send a message to Google Chat saying 'Task complete!'"
 
-The `coordination_agent` will delegate this task to the `background_agent`, which will then use its tools to perform the task.
+The `coordination_agent` will delegate this task to the `background_agent`.
+
+**Monitor a stock price:**
+> "Let me know when the price of GOOGL goes above $150."
+
+The `coordination_agent` will delegate this task to the `background_agent`, which will then use the `stock_agent` to monitor the price.

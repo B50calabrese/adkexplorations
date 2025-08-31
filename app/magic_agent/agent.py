@@ -15,16 +15,14 @@
 """Defines the Magic: The Gathering expert agent."""
 
 from google.adk.agents import LlmAgent
+from app.shared import constants
+from app.magic_agent import instructions
 from app.tools import scryfall_tool
 
 magic_agent = LlmAgent(
-    name='magic_agent',
-    model='gemini-1.5-flash',
-    description='An agent that is an expert on Magic: The Gathering.',
-    instruction=(
-        'You are an expert on Magic: The Gathering. Your purpose is to provide '
-        'information about cards, sets, and other game-related topics. You must '
-        'use the available tools to answer any questions.'
-    ),
+    name="magic_agent",
+    model=constants.AGENT_MODEL,
+    description=instructions.DESCRIPTION,
+    instruction=instructions.INSTRUCTION,
     tools=scryfall_tool.all_scryfall_tools,
 )

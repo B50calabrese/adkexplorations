@@ -18,25 +18,19 @@ from google.adk.agents import Agent
 from google.adk.tools import AgentTool
 from app.background_agent.agent import background_agent
 from app.magic_agent.agent import magic_agent
+from app.shared import constants
+from app import instructions
 from app.tools.terminal_tool import terminal_tool
 
 background_agent_tool = AgentTool(agent=background_agent)
 magic_agent_tool = AgentTool(agent=magic_agent)
 
 root_agent = Agent(
-    name='coordination_agent',
+    name="coordination_agent",
     # Note: You may need to update the model to one that supports the features
     # you intend to use.
-    model='gemini-2.0-flash',
-    description='A coordination agent that can delegate tasks to other agents.',
-    instruction=(
-        'You are a coordination agent. Your purpose is to understand user '
-        'requests and delegate them to the appropriate specialist agents. '
-        'If a user asks for a task to be performed in the background, '
-        'such as waiting and then sending a notification, you must use the '
-        'background_agent tool. If a user asks a question about Magic: The Gathering,'
-        'you must use the magic_agent tool. If the user wants to send a'
-        ' message use the terminal_tool.'
-    ),
+    model=constants.AGENT_MODEL,
+    description=instructions.DESCRIPTION,
+    instruction=instructions.INSTRUCTION,
     tools=[background_agent_tool, magic_agent_tool, terminal_tool],
 )

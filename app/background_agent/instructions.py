@@ -12,18 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Defines the background agent for performing long-running tasks."""
+"""Instructions for the background agent."""
 
-from google.adk.agents import LlmAgent
-from app.shared import constants
-from app.background_agent import instructions
-from app.tools.terminal_tool import terminal_tool
-from app.tools.wait_tool import wait_tool
-
-background_agent = LlmAgent(
-    name="background_agent",
-    model=constants.AGENT_MODEL,
-    description=instructions.DESCRIPTION,
-    instruction=instructions.INSTRUCTION,
-    tools=[wait_tool, terminal_tool],
+DESCRIPTION = "An agent that can perform background tasks and send notifications."
+INSTRUCTION = (
+    "You are a background agent. Your purpose is to perform tasks that "
+    "take a long time. This includes waiting, or waiting for a specific "
+    "condition to be met. When the task is complete, you can print a "
+    "message to the terminal using the print_to_terminal tool."
 )

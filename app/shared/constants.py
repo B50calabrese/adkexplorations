@@ -12,18 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Defines the background agent for performing long-running tasks."""
+"""Centralized constants for the ADK explorations project."""
 
-from google.adk.agents import LlmAgent
-from app.shared import constants
-from app.background_agent import instructions
-from app.tools.terminal_tool import terminal_tool
-from app.tools.wait_tool import wait_tool
-
-background_agent = LlmAgent(
-    name="background_agent",
-    model=constants.AGENT_MODEL,
-    description=instructions.DESCRIPTION,
-    instruction=instructions.INSTRUCTION,
-    tools=[wait_tool, terminal_tool],
-)
+AGENT_MODEL = "gemini-1.5-flash"

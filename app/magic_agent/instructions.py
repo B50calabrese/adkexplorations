@@ -12,18 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Defines the background agent for performing long-running tasks."""
+"""Instructions for the Magic: The Gathering expert agent."""
 
-from google.adk.agents import LlmAgent
-from app.shared import constants
-from app.background_agent import instructions
-from app.tools.terminal_tool import terminal_tool
-from app.tools.wait_tool import wait_tool
-
-background_agent = LlmAgent(
-    name="background_agent",
-    model=constants.AGENT_MODEL,
-    description=instructions.DESCRIPTION,
-    instruction=instructions.INSTRUCTION,
-    tools=[wait_tool, terminal_tool],
+DESCRIPTION = "An agent that is an expert on Magic: The Gathering."
+INSTRUCTION = (
+    "You are an expert on Magic: The Gathering. Your purpose is to provide "
+    "information about cards, sets, and other game-related topics. You must "
+    "use the available tools to answer any questions."
 )

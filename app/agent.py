@@ -18,12 +18,14 @@ from google.adk.agents import Agent
 from google.adk.tools import AgentTool
 from app.background_agent.agent import background_agent
 from app.magic_agent.agent import magic_agent
+from app.stock_agent.agent import stock_agent
 from app.shared import constants
 from app import instructions
 from app.tools.terminal_tool import terminal_tool
 
 background_agent_tool = AgentTool(agent=background_agent)
 magic_agent_tool = AgentTool(agent=magic_agent)
+stock_agent_tool = AgentTool(agent=stock_agent)
 
 root_agent = Agent(
     name="coordination_agent",
@@ -32,5 +34,5 @@ root_agent = Agent(
     model=constants.AGENT_MODEL,
     description=instructions.DESCRIPTION,
     instruction=instructions.INSTRUCTION,
-    tools=[background_agent_tool, magic_agent_tool, terminal_tool],
+    tools=[background_agent_tool, magic_agent_tool, stock_agent_tool, terminal_tool],
 )

@@ -19,25 +19,21 @@ from httplib2 import Http
 import json
 from urllib.parse import urlencode
 from google.adk.tools import FunctionTool
+from typing import Optional
 
 BASE_URL = "https://www.alphavantage.co/query"
 
-def _alpha_vantage_query(function: str, symbol: str) -> dict:
+def _alpha_vantage_query(params: dict) -> dict:
     """Makes a request to the AlphaVantage API and returns the JSON response.
 
     Args:
-        function: The API function to call (e.g., "TIME_SERIES_DAILY_ADJUSTED").
-        symbol: The stock ticker to look up.
+        params: A dictionary of query parameters to include in the request.
 
     Returns:
         A dictionary containing the JSON response from the API.
     """
     http_obj = Http()
-    params = {
-        "function": function,
-        "symbol": symbol,
-        "apikey": os.environ.get("ALPHAVANTAGE_API_KEY"),
-    }
+    params["apikey"] = os.environ.get("ALPHAVANTAGE_API_KEY")
     url = BASE_URL + "?" + urlencode(params)
 
     headers = {
@@ -70,10 +66,52 @@ def get_daily_adjusted(symbol: str) -> dict:
     Returns:
         A dictionary containing the daily adjusted time series data.
     """
-    return _alpha_vantage_query("TIME_SERIES_DAILY_ADJUSTED", symbol)
+    params = {"function": "TIME_SERIES_DAILY_ADJUSTED", "symbol": symbol}
+    return _alpha_vantage_query(params)
 
 get_daily_adjusted_tool = FunctionTool(
     func=get_daily_adjusted,
 )
 
-all_stock_tools = [get_daily_adjusted_tool]
+def get_news_sentiment(
+    tickers: Optional[str] = None,
+    topics: Optional[str] = None,
+    time_from: Optional[str] = None,
+    time_to: Optional[str] = None,
+    sort: Optional[str] = None,
+    limit: Optional[int] = None,
+) -> dict:
+    """
+    Gets news and sentiment data from the AlphaVantage API.
+
+    Args:
+        tickers: The stock/crypto/forex symbols to search for.
+        topics: The news topics to search for.
+        time_from: The start time for the search.
+        time_to: The end time for the search.
+        sort: The sort order for the results.
+        limit: The maximum number of results to return.
+
+    Returns:
+        A dictionary containing the news and sentiment data.
+    """
+    params = {"function": "NEWS_SENTIMENT"}
+    if tickers:
+        params["tickers"] = tickers
+    if topics:
+        params["topics"] = topics
+    if time_from:
+        params["time_from"] = time_from
+    if time_to:
+        params["time_to"] = time_to
+    if sort:
+        params["sort"] = sort
+    if limit:
+        params["limit"] = limit
+    return _alpha_vantage_query(params)
+
+get_news_sentiment_tool = FunctionTool(
+    func=get_news_sentiment,
+)
+
+all_stock_tools = [get_daily_adjusted_tool, get_news_sentiment_tool]
